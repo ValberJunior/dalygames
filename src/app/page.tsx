@@ -1,4 +1,4 @@
-import { Container } from "@/components";
+import { Container, SearchBar } from "@/components";
 import { IGame } from "@/utils/types/game";
 import Image from "next/image";
 import Link from "next/link";
@@ -48,6 +48,8 @@ export default async function Home() {
               </div>
           </section>
         </Link> 
+        {/* SearchBar */}
+        <SearchBar/>
       </Container>
     </main>
   );
