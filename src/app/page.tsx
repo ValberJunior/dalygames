@@ -1,4 +1,4 @@
-import { Container, SearchBar } from "@/components";
+import { Container, GameCard, SearchBar } from "@/components";
 import { IGame } from "@/utils/types/game";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,10 +18,26 @@ async function getDalyGame(){
   }
 }
 
+async function getGames(){
+  try{
+    const res = await fetch(`${process.env.NEXT_API_URL}/next-api/?api=games`,
+      /*
+      * Next Revalidate in seconds
+      */
+      {next: { revalidate: 320}}
+    );
+    return res.json();
+  }
+  catch(error:any){
+    throw new Error(error.message)
+  }
+}
+
 
 export default async function Home() {
 
-  const sortGame : IGame = await getDalyGame()
+  const sortGame : IGame = await getDalyGame();
+  const games : IGame[] = await getGames();
 
   return (
     <main className="w-full">
@@ -50,6 +66,16 @@ export default async function Home() {
         </Link> 
         {/* SearchBar */}
         <SearchBar/>
+        {/* Game List */}
+        <h2 className="text-lg font-bold mt-8 mb-5">Jogos para conhecer</h2>
+        <section className="grid gap-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {games.map(game=>(
+            <GameCard 
+              key={game.id} 
+              data={game}
+              />
+          ))}
+        </section>
       </Container>
     </main>
   );
