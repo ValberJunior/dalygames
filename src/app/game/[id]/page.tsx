@@ -3,6 +3,46 @@ import { IGame } from "@/utils/types/game"
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Label } from "./components/label";
+import { Metadata } from "next";
+
+interface PropsParams {
+    params: {
+        id: string
+    }
+}
+
+/**
+ *  Generate dynamic metadata
+ */
+export async function generateMetadata({ params }:PropsParams) : Promise<Metadata> {
+    try{
+        const res  = await fetch(`${process.env.NEXT_API_URL}/next-api/?api=game&id=${params.id}`, {next: { revalidate:60 }})
+        const game : IGame = await res.json();
+
+        return {
+            title: game.title,
+            description: `${game.description.slice(0,100)}...`,
+            keywords: game.categories,
+            openGraph:{
+                title: game.title,
+                images: [game.image_url]
+            },
+            robots:{
+                index: true,
+                follow: true,
+                nocache: true,
+                googleBot:{
+                index: true,
+                follow: true,
+                noimageindex: true
+                }
+            }
+        }
+    }
+    catch(error:any){
+        return { title: "DalyGames - Descubra jogos incríveis para se divertir!"};
+    }
+}
 
 async function getGameById (id:string) : Promise<IGame|null>{
     try{
@@ -26,9 +66,7 @@ async function getDalyGame(){
 
 export default async function GamePage ({
  params:{id}
-}:{
- params:{id: string}
-}) {
+}: PropsParams ) {
 
     const game : IGame | null = await getGameById(id);
     const gameDay: IGame = await getDalyGame();
