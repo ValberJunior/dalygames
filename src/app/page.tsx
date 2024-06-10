@@ -1,4 +1,4 @@
-import { Container, GameCard, SearchBar } from "@/components";
+import { Container, GameCard, GridWrapper, SearchBar } from "@/components";
 import { IGame } from "@/utils/types/game";
 import Image from "next/image";
 import Link from "next/link";
@@ -68,14 +68,14 @@ export default async function Home() {
         <SearchBar/>
         {/* Game List */}
         <h2 className="text-lg font-bold mt-8 mb-5">Jogos para conhecer</h2>
-        <section className="grid gap-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <GridWrapper>
           {games.map(game=>(
             <GameCard 
               key={game.id} 
               data={game}
               />
           ))}
-        </section>
+        </GridWrapper>
       </Container>
     </main>
   );
