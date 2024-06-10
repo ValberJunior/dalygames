@@ -3,7 +3,8 @@ import { IGame } from "@/utils/types/game"
 
 async function getGameByName (title:string) : Promise<IGame[]|null> {
     try{
-        const res = await fetch(`${process.env.NEXT_API_URL}/next-api/?api=game&title=${title}`);
+        const decodeTitle = decodeURI(title);
+        const res = await fetch(`${process.env.NEXT_API_URL}/next-api/?api=game&title=${decodeTitle}`);
         return res.json()
     }
     catch(error:any){
