@@ -2,6 +2,7 @@ import { Container } from "@/components";
 import Image from "next/image";
 import UserImg from "/public/user.png"
 import { FaShareAlt } from "react-icons/fa";
+import { FavoriteCard } from "./components";
 
 export default function Profile(){
     return <main className="w-full text-black">
@@ -30,6 +31,14 @@ export default function Profile(){
                         <FaShareAlt size={24} color="#FFF"/>
                     </button>
                 </div>
+            </section>
+            
+            <section className="flex flex-wrap gap-5 flex-col md:flex-row">
+
+              <FavoriteCard/>
+              <FavoriteCard/>
+              <FavoriteCard/>
+
             </section>
         </Container>
     </main>
