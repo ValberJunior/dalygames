@@ -3,6 +3,12 @@ import Image from "next/image";
 import UserImg from "/public/user.png"
 import { FaShareAlt } from "react-icons/fa";
 import { FavoriteCard } from "./components";
+import { Metadata } from "next";
+
+export const metadata:Metadata = {
+    title: 'Meu perfil - DalyGames',
+    description: 'Perfil usuário anônimo | Daly Games'
+}
 
 export default function Profile(){
     return <main className="w-full text-black">
